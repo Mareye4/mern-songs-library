@@ -24,15 +24,15 @@ A full-stack music library application built with the **MERN stack** (MongoDB, E
 
 ## Features
 
-- 🎵 **Full Songs CRUD** — Create, read, update, and delete songs with live Redux state updates, no page reloads
-- 🔍 **Filtering & Search** — Real-time debounced search + genre filter with active filter chips
-- 📊 **Statistics Dashboard** — Recharts-powered donut and horizontal bar charts for genres, artists, and albums
-- 📈 **Scalable Charts** — Top-10 cap with +X more indicator; "Other" bucket grouping for genre overflow
-- 🎨 **Emotion + Styled System** — Responsive theming with mobile, tablet, and desktop breakpoints
-- ✨ **Animations** — Staggered list entries, modal transitions, hover micro-interactions, count-up stats
-- 🔔 **Toast Feedback** — Animated success/error notifications on every CRUD action
-- 💀 **Skeleton Loaders** — Shimmer placeholder loading states for songs and statistics
-- 🏷️ **Genre Dropdown** — Fixed genre select prevents case-duplicate entries; legacy values handled gracefully
+-  **Full Songs CRUD** — Create, read, update, and delete songs with live Redux state updates, no page reloads
+-  **Filtering & Search** — Real-time debounced search + genre filter with active filter chips
+-  **Statistics Dashboard** — Recharts-powered donut and horizontal bar charts for genres, artists, and albums
+-  **Scalable Charts** — Top-10 cap with +X more indicator; "Other" bucket grouping for genre overflow
+-  **Emotion + Styled System** — Responsive theming with mobile, tablet, and desktop breakpoints
+-  **Animations** — Staggered list entries, modal transitions, hover micro-interactions, count-up stats
+-  **Toast Feedback** — Animated success/error notifications on every CRUD action
+-  **Skeleton Loaders** — Shimmer placeholder loading states for songs and statistics
+-  **Genre Dropdown** — Fixed genre select prevents case-duplicate entries; legacy values handled gracefully
 
 ---
 
