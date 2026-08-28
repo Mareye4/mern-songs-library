@@ -1,4 +1,4 @@
-# Addis Software MERN Stack Test — Songs Library
+# MERN Songs Library
 
 A full-stack music library application built with the **MERN stack** (MongoDB, Express, React, Node.js) featuring Redux Toolkit, Redux-Saga, Emotion, Styled System, and Recharts.
 
@@ -6,9 +6,8 @@ A full-stack music library application built with the **MERN stack** (MongoDB, E
 
 ## Live Demo
 
-> _(Add your deployed URLs here after deployment)_
-> - **Frontend**: `https://your-app.vercel.app`
-> - **Backend API**: `https://your-app.onrender.com/api/songs`
+- **Frontend**: https://mern-songs-library.vercel.app
+- **Backend API**: https://mern-songs-library.onrender.com/api/songs
 
 ---
 
@@ -18,7 +17,7 @@ A full-stack music library application built with the **MERN stack** (MongoDB, E
 |---|---|
 | **Frontend** | React 18, TypeScript, Vite, Redux Toolkit, Redux-Saga, Emotion, Styled System, Recharts |
 | **Backend** | Node.js 20, Express 4, Mongoose 8, dotenv, cors |
-| **Database** | MongoDB (Docker locally / MongoDB Atlas in production) |
+| **Database** | MongoDB Atlas (production) / Docker (local) |
 | **Deployment** | Vercel (frontend) + Render (backend) + MongoDB Atlas (database) |
 
 ---
@@ -40,7 +39,7 @@ A full-stack music library application built with the **MERN stack** (MongoDB, E
 ## Project Structure
 
 ```
-intern 1/
+MERN songs library/
 ├── backend/
 │   ├── src/
 │   │   ├── config/db.js
@@ -78,8 +77,8 @@ intern 1/
 ### 1. Clone the repo
 
 ```bash
-git clone <your-repo-url>
-cd "intern 1"
+git clone https://github.com/mareye4/mern-songs-library.git
+cd "MERN songs library"
 ```
 
 ### 2. Start MongoDB via Docker
@@ -135,38 +134,37 @@ npm run dev
 
 ## Production Deployment
 
-### Step 1 — Database: MongoDB Atlas
+### Database — MongoDB Atlas
 
-1. Create a free M0 cluster at https://www.mongodb.com/cloud/atlas
-2. Create a database user and allow all IPs (0.0.0.0/0) in Network Access
-3. Copy the connection string:
-   `mongodb+srv://<user>:<password>@cluster.mongodb.net/songs_db?retryWrites=true&w=majority`
+- Cluster: `mern-test-project.s4jbb0b.mongodb.net`
+- Database: `songs_db`
 
-### Step 2 — Backend: Render
+### Backend — Render
 
-1. Create a Web Service at https://render.com pointing to the `backend/` directory
-2. Build Command: `npm install --omit=dev`
-3. Start Command: `npm start`
-4. Environment Variables:
+- Live URL: `https://mern-songs-library.onrender.com`
+- Root Directory: `backend/`
+- Start Command: `npm start`
+
+**Environment Variables on Render:**
 
 | Key | Value |
 |---|---|
 | `NODE_ENV` | `production` |
 | `PORT` | `10000` |
-| `MONGODB_URI` | your Atlas connection string |
+| `MONGODB_URI` | _(Atlas connection string)_ |
 
-### Step 3 — Frontend: Vercel
+### Frontend — Vercel
 
-1. Create a new project at https://vercel.com, set Root Directory to `frontend/`
-2. Build Command: `npm run build`
-3. Output Directory: `dist`
-4. Environment Variables:
+- Live URL: `https://mern-songs-library.vercel.app`
+- Root Directory: `frontend/`
+- Build Command: `npm run build`
+- Output Directory: `dist`
+
+**Environment Variables on Vercel:**
 
 | Key | Value |
 |---|---|
-| `VITE_API_BASE_URL` | `https://<your-render-app>.onrender.com/api` |
-
-The included `frontend/vercel.json` handles SPA client-side routing rewrites automatically.
+| `VITE_API_BASE_URL` | `https://mern-songs-library.onrender.com/api` |
 
 ---
 
