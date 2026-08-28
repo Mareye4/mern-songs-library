@@ -16,7 +16,7 @@ const ItemCard = styled(Card)<{ delayIndex: number }>`
   grid-template-columns: 1fr;
   align-items: center;
   gap: 0.85rem;
-  padding: 1.05rem 1.35rem;
+  padding: 1.1rem 1.35rem;
   border-radius: 10px;
   border: 1px solid ${({ theme }: any) => theme?.colors?.border || '#e2e8f0'};
   background-color: #ffffff;
@@ -122,17 +122,12 @@ const DeleteButton = styled(Button)`
 export const SongListItem: React.FC<SongListItemProps> = ({ song, index, onEdit, onDelete }) => {
   return (
     <ItemCard delayIndex={index}>
-      {/* 1. Index / ID */}
-      <Flex alignItems="center" gap={2}>
+      {/* 1. Index Counter */}
+      <Flex alignItems="center">
         <IndexBox className="song-index-box">{index + 1}</IndexBox>
-        <Box display={['block', 'block', 'none']}>
-          <Text fontSize={0} color="textMuted" style={{ fontFamily: 'ui-monospace, monospace' }}>
-            #{song._id.slice(-5)}
-          </Text>
-        </Box>
       </Flex>
 
-      {/* 2. Song Title + Monospace ID */}
+      {/* 2. Song Title */}
       <Box minWidth="0">
         <Heading
           as="h3"
@@ -151,17 +146,9 @@ export const SongListItem: React.FC<SongListItemProps> = ({ song, index, onEdit,
         >
           {song.title}
         </Heading>
-        <Text
-          fontSize={0}
-          color="textMuted"
-          display={['none', 'none', 'block']}
-          style={{ fontFamily: 'ui-monospace, monospace', opacity: 0.8 }}
-        >
-          ID: {song._id.slice(-6)}
-        </Text>
       </Box>
 
-      {/* 3. Artist (Fixed Column) */}
+      {/* 3. Artist */}
       <Box minWidth="0">
         <MobileMetaLabel>Artist</MobileMetaLabel>
         <Text
@@ -179,7 +166,7 @@ export const SongListItem: React.FC<SongListItemProps> = ({ song, index, onEdit,
         </Text>
       </Box>
 
-      {/* 4. Album (Fixed Column) */}
+      {/* 4. Album */}
       <Box minWidth="0">
         <MobileMetaLabel>Album</MobileMetaLabel>
         <Text
@@ -196,12 +183,12 @@ export const SongListItem: React.FC<SongListItemProps> = ({ song, index, onEdit,
         </Text>
       </Box>
 
-      {/* 5. Genre Badge (Fixed 110px Column) */}
+      {/* 5. Genre Badge */}
       <Box justifySelf={['start', 'start', 'start']} flexShrink={0}>
         <Badge variant="primary">{song.genre}</Badge>
       </Box>
 
-      {/* 6. Action Buttons (Fixed 145px Column, Right Aligned) */}
+      {/* 6. Action Buttons */}
       <Flex gap={2} justifySelf={['end', 'end', 'end']} mt={[2, 2, 0]} flexShrink={0}>
         <EditButton
           type="button"
