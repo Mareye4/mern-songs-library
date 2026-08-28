@@ -11,7 +11,14 @@ interface StatCardProps {
   accentColor?: string;
 }
 
-const StyledStatCard = styled(Card)`
+const StyledStatCard = styled(Card)<{ accentColor: string }>`
+  position: relative;
+  overflow: hidden;
+  padding: 1.25rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-top: 3px solid ${(props) => props.accentColor};
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.2s ease;
@@ -20,6 +27,7 @@ const StyledStatCard = styled(Card)`
   &:hover {
     transform: translateY(-2px);
     border-color: ${({ theme }: any) => theme?.colors?.borderDark || '#cbd5e1'};
+    border-top-color: ${(props) => props.accentColor};
     box-shadow: ${({ theme }: any) => theme?.shadows?.md || '0 8px 16px -2px rgba(0,0,0,0.08)'};
   }
 
@@ -30,21 +38,24 @@ const StyledStatCard = styled(Card)`
 `;
 
 const IconBox = styled.div`
-  width: 48px;
-  height: 48px;
+  width: 42px;
+  height: 42px;
   border-radius: 8px;
   background-color: ${({ theme }: any) => theme?.colors?.bg || '#f8fafc'};
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   flex-shrink: 0;
   transition: transform 0.2s ease, background-color 0.2s ease;
 `;
 
 const StatLabel = styled(Text)`
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: ${({ theme }: any) => theme?.colors?.textMuted || '#64748b'};
 `;
 
 export const StatCard: React.FC<StatCardProps> = ({
@@ -54,7 +65,6 @@ export const StatCard: React.FC<StatCardProps> = ({
   description,
   accentColor = '#2563eb',
 }) => {
-  // Count-up animation for numeric values
   const [displayValue, setDisplayValue] = useState<number | string>(
     typeof value === 'number' ? 0 : (value ?? '')
   );
@@ -70,7 +80,7 @@ export const StatCard: React.FC<StatCardProps> = ({
       return;
     }
 
-    const duration = 350; // 350ms smooth count-up
+    const duration = 350;
     const steps = 12;
     const increment = value / steps;
     let current = 0;
@@ -89,29 +99,28 @@ export const StatCard: React.FC<StatCardProps> = ({
   }, [value]);
 
   return (
-    <StyledStatCard p={[3, 4]}>
-      <Flex alignItems="center" gap={3}>
-        <IconBox className="stat-icon-box">{icon}</IconBox>
-
-        <Box flex="1">
-          <StatLabel
-            fontSize={0}
-            fontWeight={600}
-            color="textMuted"
-            mb={1}
+    <StyledStatCard accentColor={accentColor}>
+      <Flex alignItems="flex-start" justifyContent="space-between" gap={2}>
+        <Box flex="1" minWidth="0">
+          <StatLabel mb={1}>{label}</StatLabel>
+          <Text
+            fontSize={[4, 5]}
+            fontWeight={700}
+            color={accentColor}
+            lineHeight={1.15}
+            style={{ wordBreak: 'break-word' }}
           >
-            {label}
-          </StatLabel>
-          <Text fontSize={[5, 6]} fontWeight={700} color={accentColor} lineHeight={1.1}>
             {displayValue}
           </Text>
-          {description && (
-            <Text fontSize={0} color="textMuted" mt={1}>
-              {description}
-            </Text>
-          )}
         </Box>
+        <IconBox className="stat-icon-box">{icon}</IconBox>
       </Flex>
+
+      {description && (
+        <Text fontSize={0} color="textMuted" mt={2} pt={1} borderTop="1px solid #f1f5f9">
+          {description}
+        </Text>
+      )}
     </StyledStatCard>
   );
 };
