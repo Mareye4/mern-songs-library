@@ -183,15 +183,6 @@ export const SongsPage: React.FC = () => {
         <Flex gap={2} alignItems="center">
           <Button
             type="button"
-            variant="outline"
-            onClick={() => dispatch(fetchSongsRequest(filters))}
-            disabled={loading}
-          >
-            <span>🔄</span>
-            <span>Refresh</span>
-          </Button>
-          <Button
-            type="button"
             variant="primary"
             onClick={handleOpenCreate}
           >
