@@ -29,8 +29,8 @@ const ItemCard = styled(Card)<{ delayIndex: number }>`
   animation-delay: ${(props) => `${Math.min(props.delayIndex * 35, 250)}ms`};
 
   &:hover {
-    border-color: ${({ theme }: any) => theme?.colors?.borderDark || '#cbd5e1'};
-    box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
+    border-color: #bfdbfe;
+    box-shadow: 0 4px 14px -2px rgba(37, 99, 235, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
     transform: translateY(-1.5px);
   }
 
@@ -38,6 +38,10 @@ const ItemCard = styled(Card)<{ delayIndex: number }>`
     background-color: ${({ theme }: any) => theme?.colors?.primaryLight || '#eff6ff'};
     color: ${({ theme }: any) => theme?.colors?.primary || '#2563eb'};
     border-color: #dbeafe;
+  }
+
+  &:hover .song-title-text {
+    color: ${({ theme }: any) => theme?.colors?.primary || '#2563eb'};
   }
 
   @media screen and (min-width: 768px) {
@@ -102,14 +106,14 @@ const DeleteButton = styled(Button)`
   border-radius: 7px;
   gap: 0.35rem;
   background-color: #ffffff;
-  border: 1px solid #fecaca;
+  border: 1px solid #fee2e2;
   color: #dc2626;
   transition: all 0.18s ease;
 
   &:hover:not(:disabled) {
     background-color: #fef2f2;
     color: #b91c1c;
-    border-color: #f87171;
+    border-color: #fca5a5;
     box-shadow: 0 1px 2px rgba(220, 38, 38, 0.12);
     transform: translateY(-1px);
   }
@@ -132,6 +136,7 @@ export const SongListItem: React.FC<SongListItemProps> = ({ song, index, onEdit,
       <Box minWidth="0">
         <Heading
           as="h3"
+          className="song-title-text"
           fontSize={2}
           fontWeight={600}
           color="text"
@@ -140,6 +145,7 @@ export const SongListItem: React.FC<SongListItemProps> = ({ song, index, onEdit,
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
             letterSpacing: '-0.01em',
+            transition: 'color 0.18s ease',
           }}
           title={song.title}
         >
@@ -178,7 +184,7 @@ export const SongListItem: React.FC<SongListItemProps> = ({ song, index, onEdit,
         <MobileMetaLabel>Album</MobileMetaLabel>
         <Text
           fontSize={1}
-          color="text"
+          color="textMuted"
           style={{
             overflow: 'hidden',
             textOverflow: 'ellipsis',
