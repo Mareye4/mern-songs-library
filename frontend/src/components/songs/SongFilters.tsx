@@ -12,13 +12,20 @@ interface SongFiltersProps {
   totalMatches: number;
 }
 
+const FilterCard = styled(Card)`
+  padding: 1.25rem 1.5rem;
+  border-radius: 12px;
+  border: 1px solid ${({ theme }: any) => theme?.colors?.border || '#e2e8f0'};
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.03);
+`;
+
 const StyledSelect = styled.select`
   padding: 0.625rem 0.875rem;
   border-radius: 8px;
   border: 1px solid ${({ theme }: any) => theme?.colors?.border || '#e2e8f0'};
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   color: ${({ theme }: any) => theme?.colors?.text || '#0f172a'};
-  background-color: ${({ theme }: any) => theme?.colors?.surface || '#ffffff'};
+  background-color: #ffffff;
   outline: none;
   cursor: pointer;
   min-width: 160px;
@@ -26,13 +33,14 @@ const StyledSelect = styled.select`
 
   &:focus {
     border-color: ${({ theme }: any) => theme?.colors?.primary || '#2563eb'};
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
   }
 `;
 
 const FilterLabel = styled(Text)`
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
+  font-size: 0.725rem;
 `;
 
 export const SongFilters: React.FC<SongFiltersProps> = ({
@@ -44,7 +52,6 @@ export const SongFilters: React.FC<SongFiltersProps> = ({
   onClearFilters,
   totalMatches,
 }) => {
-  // Local state for debounced search
   const [searchTerm, setSearchTerm] = useState(searchQuery);
 
   useEffect(() => {
@@ -64,7 +71,7 @@ export const SongFilters: React.FC<SongFiltersProps> = ({
   const hasActiveFilters = Boolean(searchQuery.trim() || selectedGenre);
 
   return (
-    <Card p={[3, 4]}>
+    <FilterCard>
       <Flex flexDirection="column" gap={3}>
         <Flex
           flexDirection={['column', 'column', 'row']}
@@ -125,7 +132,7 @@ export const SongFilters: React.FC<SongFiltersProps> = ({
           borderColor="border"
         >
           <Flex alignItems="center" gap={2} flexWrap="wrap">
-            <FilterLabel fontSize={0} color="textMuted" fontWeight={600}>
+            <FilterLabel color="textMuted" fontWeight={600}>
               Filters:
             </FilterLabel>
             {!hasActiveFilters && (
@@ -137,7 +144,7 @@ export const SongFilters: React.FC<SongFiltersProps> = ({
               <Badge variant="primary">
                 Genre: {selectedGenre}{' '}
                 <span
-                  style={{ marginLeft: '4px', cursor: 'pointer' }}
+                  style={{ marginLeft: '6px', cursor: 'pointer', fontWeight: 'bold' }}
                   onClick={() => onGenreChange('')}
                   role="button"
                   tabIndex={0}
@@ -151,7 +158,7 @@ export const SongFilters: React.FC<SongFiltersProps> = ({
               <Badge variant="neutral">
                 Search: &ldquo;{searchQuery}&rdquo;{' '}
                 <span
-                  style={{ marginLeft: '4px', cursor: 'pointer' }}
+                  style={{ marginLeft: '6px', cursor: 'pointer', fontWeight: 'bold' }}
                   onClick={() => {
                     setSearchTerm('');
                     onSearchChange('');
@@ -171,6 +178,6 @@ export const SongFilters: React.FC<SongFiltersProps> = ({
           </Text>
         </Flex>
       </Flex>
-    </Card>
+    </FilterCard>
   );
 };
