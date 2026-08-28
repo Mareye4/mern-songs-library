@@ -16,7 +16,7 @@ const ItemCard = styled(Card)<{ delayIndex: number }>`
   grid-template-columns: 1fr;
   align-items: center;
   gap: 0.85rem;
-  padding: 1.1rem 1.35rem;
+  padding: 1.05rem 1.35rem;
   border-radius: 10px;
   border: 1px solid ${({ theme }: any) => theme?.colors?.border || '#e2e8f0'};
   background-color: #ffffff;
@@ -34,21 +34,21 @@ const ItemCard = styled(Card)<{ delayIndex: number }>`
     transform: translateY(-1.5px);
   }
 
-  &:hover .song-index-circle {
+  &:hover .song-index-box {
     background-color: ${({ theme }: any) => theme?.colors?.primaryLight || '#eff6ff'};
     color: ${({ theme }: any) => theme?.colors?.primary || '#2563eb'};
     border-color: #dbeafe;
   }
 
   @media screen and (min-width: 768px) {
-    grid-template-columns: auto minmax(180px, 2fr) minmax(130px, 1.3fr) minmax(130px, 1.3fr) auto auto;
+    grid-template-columns: auto minmax(190px, 2fr) minmax(130px, 1.3fr) minmax(130px, 1.3fr) auto auto;
     gap: 1.25rem;
   }
 `;
 
-const IndexCircle = styled.span`
-  width: 30px;
-  height: 30px;
+const IndexBox = styled.div`
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -56,8 +56,8 @@ const IndexCircle = styled.span`
   font-weight: 700;
   color: ${({ theme }: any) => theme?.colors?.textMuted || '#64748b'};
   background-color: ${({ theme }: any) => theme?.colors?.bg || '#f8fafc'};
-  border: 1px solid #e2e8f0;
-  border-radius: 50%;
+  border: 1px solid ${({ theme }: any) => theme?.colors?.border || '#e2e8f0'};
+  border-radius: 8px;
   flex-shrink: 0;
   transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
 `;
@@ -72,16 +72,41 @@ const MetaLabel = styled(Text)`
   line-height: 1;
 `;
 
-const ActionButton = styled(Button)`
+const EditButton = styled(Button)`
   font-size: 0.8rem;
-  padding: 0.4rem 0.75rem;
-  border-radius: 6px;
+  padding: 0.375rem 0.75rem;
+  border-radius: 7px;
   gap: 0.35rem;
+  background-color: #ffffff;
+  border: 1px solid ${({ theme }: any) => theme?.colors?.border || '#e2e8f0'};
+  color: ${({ theme }: any) => theme?.colors?.text || '#334155'};
+  transition: all 0.18s ease;
 
-  &.edit-btn:hover:not(:disabled) {
+  &:hover:not(:disabled) {
     background-color: #eff6ff;
     color: #2563eb;
     border-color: #bfdbfe;
+    box-shadow: 0 1px 2px rgba(37, 99, 235, 0.1);
+    transform: translateY(-1px);
+  }
+`;
+
+const DeleteButton = styled(Button)`
+  font-size: 0.8rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 7px;
+  gap: 0.35rem;
+  background-color: #ffffff;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  transition: all 0.18s ease;
+
+  &:hover:not(:disabled) {
+    background-color: #fef2f2;
+    color: #b91c1c;
+    border-color: #f87171;
+    box-shadow: 0 1px 2px rgba(220, 38, 38, 0.12);
+    transform: translateY(-1px);
   }
 `;
 
@@ -90,7 +115,7 @@ export const SongListItem: React.FC<SongListItemProps> = ({ song, index, onEdit,
     <ItemCard delayIndex={index}>
       {/* 1. Index / ID */}
       <Flex alignItems="center" gap={2}>
-        <IndexCircle className="song-index-circle">{index + 1}</IndexCircle>
+        <IndexBox className="song-index-box">{index + 1}</IndexBox>
         <Box display={['block', 'block', 'none']}>
           <Text fontSize={0} color="textMuted" style={{ fontFamily: 'ui-monospace, monospace' }}>
             #{song._id.slice(-5)}
@@ -119,7 +144,7 @@ export const SongListItem: React.FC<SongListItemProps> = ({ song, index, onEdit,
           fontSize={0}
           color="textMuted"
           display={['none', 'none', 'block']}
-          style={{ fontFamily: 'ui-monospace, monospace', opacity: 0.85 }}
+          style={{ fontFamily: 'ui-monospace, monospace', opacity: 0.8 }}
         >
           ID: {song._id.slice(-6)}
         </Text>
@@ -167,22 +192,19 @@ export const SongListItem: React.FC<SongListItemProps> = ({ song, index, onEdit,
 
       {/* 6. Action Buttons */}
       <Flex gap={2} justifySelf={['end', 'end', 'end']} mt={[2, 2, 0]} flexShrink={0}>
-        <ActionButton
+        <EditButton
           type="button"
-          variant="outline"
           size="sm"
-          className="edit-btn"
           onClick={() => onEdit(song)}
           title={`Edit ${song.title}`}
           aria-label={`Edit ${song.title}`}
         >
           <span>✏️</span>
           <span>Edit</span>
-        </ActionButton>
+        </EditButton>
 
-        <ActionButton
+        <DeleteButton
           type="button"
-          variant="danger"
           size="sm"
           onClick={() => onDelete(song)}
           title={`Delete ${song.title}`}
@@ -190,7 +212,7 @@ export const SongListItem: React.FC<SongListItemProps> = ({ song, index, onEdit,
         >
           <span>🗑️</span>
           <span>Delete</span>
-        </ActionButton>
+        </DeleteButton>
       </Flex>
     </ItemCard>
   );

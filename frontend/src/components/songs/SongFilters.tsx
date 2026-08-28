@@ -16,6 +16,7 @@ const FilterCard = styled(Card)`
   padding: 1.25rem 1.5rem;
   border-radius: 12px;
   border: 1px solid ${({ theme }: any) => theme?.colors?.border || '#e2e8f0'};
+  background-color: #ffffff;
   box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.03);
 `;
 
@@ -41,6 +42,8 @@ const FilterLabel = styled(Text)`
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-size: 0.725rem;
+  font-weight: 600;
+  color: ${({ theme }: any) => theme?.colors?.textMuted || '#64748b'};
 `;
 
 export const SongFilters: React.FC<SongFiltersProps> = ({
@@ -132,9 +135,7 @@ export const SongFilters: React.FC<SongFiltersProps> = ({
           borderColor="border"
         >
           <Flex alignItems="center" gap={2} flexWrap="wrap">
-            <FilterLabel color="textMuted" fontWeight={600}>
-              Filters:
-            </FilterLabel>
+            <FilterLabel>Filters:</FilterLabel>
             {!hasActiveFilters && (
               <Text fontSize={1} color="textMuted">
                 Showing all songs

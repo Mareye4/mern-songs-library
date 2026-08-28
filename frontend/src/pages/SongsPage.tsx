@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import styled from '@emotion/styled';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { Badge, Box, Button, Flex, Heading, Text } from '../components/common/Primitives';
 import { DeleteConfirmModal } from '../components/songs/DeleteConfirmModal';
@@ -22,27 +23,37 @@ import {
 import { CreateSongInput } from '../features/songs/types';
 import { Song } from '../types';
 
+const AddSongButton = styled(Button)`
+  padding: 0.55rem 1.15rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 8px;
+  background-color: ${({ theme }: any) => theme?.colors?.primary || '#2563eb'};
+  box-shadow: 0 1px 2px rgba(37, 99, 235, 0.2);
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &:hover:not(:disabled) {
+    background-color: ${({ theme }: any) => theme?.colors?.primaryHover || '#1d4ed8'};
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.28);
+  }
+`;
+
 export const SongsPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { songs, loading, error, filters } = useAppSelector((state) => state.songs);
 
-  // Modal UI state
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [editingSong, setEditingSong] = useState<Song | null>(null);
   const [deletingSong, setDeletingSong] = useState<Song | null>(null);
-
-  // Toast feedback state
   const [toast, setToast] = useState<ToastMessage | null>(null);
 
-  // Track pending submission to close modal on success and trigger feedback
   const isSubmittingRef = useRef<'create' | 'update' | 'delete' | null>(null);
 
-  // Initial fetch with active filters
   useEffect(() => {
     dispatch(fetchSongsRequest(filters));
   }, [dispatch]);
 
-  // When filters change, trigger fetchSongsRequest
   const handleSearchChange = (search: string) => {
     dispatch(setFilterSearch(search));
     dispatch(fetchSongsRequest({ genre: filters.genre, search }));
@@ -58,14 +69,12 @@ export const SongsPage: React.FC = () => {
     dispatch(fetchSongsRequest({ genre: '', search: '' }));
   };
 
-  // Derive unique list of available genres for filter dropdown
   const availableGenres = useMemo(() => {
     const songGenres = songs.map((s) => s.genre).filter(Boolean);
     const combined = Array.from(new Set([...(GENRES as readonly string[]), ...songGenres]));
     return combined.sort((a, b) => a.localeCompare(b));
   }, [songs]);
 
-  // Handle auto-closing modals and triggering Toast feedback
   useEffect(() => {
     if (!loading && isSubmittingRef.current) {
       if (!error) {
@@ -95,7 +104,6 @@ export const SongsPage: React.FC = () => {
         }
         isSubmittingRef.current = null;
       } else {
-        // Trigger error toast as secondary feedback alongside inline modal error
         setToast({
           id: String(Date.now()),
           type: 'error',
@@ -181,14 +189,14 @@ export const SongsPage: React.FC = () => {
         </Box>
 
         <Flex gap={2} alignItems="center">
-          <Button
+          <AddSongButton
             type="button"
             variant="primary"
             onClick={handleOpenCreate}
           >
             <span>➕</span>
             <span>Add Song</span>
-          </Button>
+          </AddSongButton>
         </Flex>
       </Flex>
 
