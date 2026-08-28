@@ -41,7 +41,7 @@ const ItemCard = styled(Card)<{ delayIndex: number }>`
   }
 
   @media screen and (min-width: 768px) {
-    grid-template-columns: auto minmax(190px, 2fr) minmax(130px, 1.3fr) minmax(130px, 1.3fr) auto auto;
+    grid-template-columns: 36px minmax(180px, 2.5fr) minmax(140px, 1.6fr) minmax(140px, 1.6fr) 110px 145px;
     gap: 1.25rem;
   }
 `;
@@ -62,7 +62,7 @@ const IndexBox = styled.div`
   transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
 `;
 
-const MetaLabel = styled(Text)`
+const MobileMetaLabel = styled(Text)`
   font-size: 0.675rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -70,6 +70,11 @@ const MetaLabel = styled(Text)`
   color: ${({ theme }: any) => theme?.colors?.textMuted || '#64748b'};
   margin-bottom: 2px;
   line-height: 1;
+  display: block;
+
+  @media screen and (min-width: 768px) {
+    display: none;
+  }
 `;
 
 const EditButton = styled(Button)`
@@ -123,7 +128,7 @@ export const SongListItem: React.FC<SongListItemProps> = ({ song, index, onEdit,
         </Box>
       </Flex>
 
-      {/* 2. Song Title */}
+      {/* 2. Song Title + Monospace ID */}
       <Box minWidth="0">
         <Heading
           as="h3"
@@ -150,9 +155,9 @@ export const SongListItem: React.FC<SongListItemProps> = ({ song, index, onEdit,
         </Text>
       </Box>
 
-      {/* 3. Artist */}
+      {/* 3. Artist (Fixed Column) */}
       <Box minWidth="0">
-        <MetaLabel>Artist</MetaLabel>
+        <MobileMetaLabel>Artist</MobileMetaLabel>
         <Text
           fontSize={1}
           fontWeight={500}
@@ -168,9 +173,9 @@ export const SongListItem: React.FC<SongListItemProps> = ({ song, index, onEdit,
         </Text>
       </Box>
 
-      {/* 4. Album */}
+      {/* 4. Album (Fixed Column) */}
       <Box minWidth="0">
-        <MetaLabel>Album</MetaLabel>
+        <MobileMetaLabel>Album</MobileMetaLabel>
         <Text
           fontSize={1}
           color="text"
@@ -185,12 +190,12 @@ export const SongListItem: React.FC<SongListItemProps> = ({ song, index, onEdit,
         </Text>
       </Box>
 
-      {/* 5. Genre Badge */}
+      {/* 5. Genre Badge (Fixed 110px Column) */}
       <Box justifySelf={['start', 'start', 'start']} flexShrink={0}>
         <Badge variant="primary">{song.genre}</Badge>
       </Box>
 
-      {/* 6. Action Buttons */}
+      {/* 6. Action Buttons (Fixed 145px Column, Right Aligned) */}
       <Flex gap={2} justifySelf={['end', 'end', 'end']} mt={[2, 2, 0]} flexShrink={0}>
         <EditButton
           type="button"
