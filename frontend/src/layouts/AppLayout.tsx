@@ -24,7 +24,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children, activeTab, onTab
       <StyledFooter>
         <Box py={3} px={4} textAlign="center">
           <Text fontSize={1} color="textMuted">
-            Addis Software MERN Stack Test &copy; {new Date().getFullYear()}
+            Melodex &copy; {new Date().getFullYear()} — Addis Software MERN Stack Test
           </Text>
         </Box>
       </StyledFooter>

@@ -22,13 +22,41 @@ const LogoIconBox = styled.div`
   width: 36px;
   height: 36px;
   border-radius: 9px;
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  background: linear-gradient(135deg, #315fdc, #4f46c5);
+  box-shadow: 0 4px 12px rgba(49, 95, 220, 0.20);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.15rem;
-  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
   flex-shrink: 0;
+`;
+
+const Wordmark = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const BrandTitle = styled(Heading)`
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #172033;
+  line-height: 1.15;
+`;
+
+const BrandAccent = styled.span`
+  color: #315fdc;
+`;
+
+const BrandTagline = styled.span`
+  font-size: 10px;
+  font-weight: 600;
+  color: #8a97aa;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1;
+  margin-top: 2px;
 `;
 
 const NavSegmentedGroup = styled(Flex)`
@@ -74,16 +102,17 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, onTabChange }) => {
         flexWrap="wrap"
         gap={3}
       >
-        {/* Brand Logo & Title */}
-        <Flex alignItems="center" gap={2.5}>
+        {/* Brand Logo & Wordmark */}
+        <Flex alignItems="center" gap="10px">
           <LogoIconBox>
             <span style={{ color: '#ffffff', lineHeight: 1 }}>🎵</span>
           </LogoIconBox>
-          <Box>
-            <Heading as="h1" fontSize={[3, 4]} fontWeight={700} style={{ letterSpacing: '-0.02em', color: '#0f172a' }}>
-              Music Management
-            </Heading>
-          </Box>
+          <Wordmark>
+            <BrandTitle as="h1">
+              Melo<BrandAccent>dex</BrandAccent>
+            </BrandTitle>
+            <BrandTagline>Music Library &amp; Insights</BrandTagline>
+          </Wordmark>
         </Flex>
 
         {/* Navigation Tabs */}
