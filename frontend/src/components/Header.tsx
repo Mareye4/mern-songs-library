@@ -22,12 +22,11 @@ const LogoIconBox = styled.div`
   width: 36px;
   height: 36px;
   border-radius: 9px;
-  background: linear-gradient(135deg, #315fdc, #4f46c5);
-  box-shadow: 0 4px 12px rgba(49, 95, 220, 0.20);
+  background: linear-gradient(135deg, #2554e8 0%, #312e81 100%);
+  box-shadow: 0 4px 12px rgba(37, 84, 232, 0.28);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.15rem;
   flex-shrink: 0;
 `;
 
@@ -104,8 +103,22 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, onTabChange }) => {
       >
         {/* Brand Logo & Wordmark */}
         <Flex alignItems="center" gap="10px">
-          <LogoIconBox>
-            <span style={{ color: '#ffffff', lineHeight: 1 }}>🎵</span>
+          <LogoIconBox aria-hidden="true">
+            <svg
+              width="19"
+              height="19"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#ffffff"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{ filter: 'drop-shadow(0 1px 2px rgba(0, 0, 0, 0.25))' }}
+            >
+              <path d="M9 18V5l12-2v13" />
+              <circle cx="6" cy="18" r="3" fill="#ffffff" />
+              <circle cx="18" cy="16" r="3" fill="#ffffff" />
+            </svg>
           </LogoIconBox>
           <Wordmark>
             <BrandTitle as="h1">
