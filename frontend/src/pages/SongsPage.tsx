@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { Badge, Box, Button, Flex, Heading, Text } from '../components/common/Primitives';
+import { Box, Button, Flex, Heading, Text } from '../components/common/Primitives';
 import { DeleteConfirmModal } from '../components/songs/DeleteConfirmModal';
 import { ErrorState } from '../components/common/ErrorState';
 import { LoadingState } from '../components/common/LoadingState';
@@ -23,19 +23,51 @@ import {
 import { CreateSongInput } from '../features/songs/types';
 import { Song } from '../types';
 
+const StatusPill = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.65rem;
+  background-color: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #dbeafe;
+  border-radius: 9999px;
+  font-size: 0.775rem;
+  font-weight: 600;
+  line-height: 1;
+`;
+
+const StatusDot = styled.span`
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #2563eb;
+  display: inline-block;
+  flex-shrink: 0;
+`;
+
 const AddSongButton = styled(Button)`
-  padding: 0.55rem 1.15rem;
+  padding: 0.6rem 1.25rem;
   font-size: 0.875rem;
   font-weight: 600;
   border-radius: 8px;
-  background-color: ${({ theme }: any) => theme?.colors?.primary || '#2563eb'};
-  box-shadow: 0 1px 2px rgba(37, 99, 235, 0.2);
+  background-color: #2563eb;
+  color: #ffffff;
+  border: 1px solid #1d4ed8;
+  box-shadow: 0 1px 3px rgba(37, 99, 235, 0.25);
   transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
 
   &:hover:not(:disabled) {
-    background-color: ${({ theme }: any) => theme?.colors?.primaryHover || '#1d4ed8'};
+    background-color: #1d4ed8;
     transform: translateY(-1px);
-    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.28);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
   }
 `;
 
@@ -173,17 +205,18 @@ export const SongsPage: React.FC = () => {
         gap={3}
       >
         <Box>
-          <Flex alignItems="center" gap={2}>
-            <Heading as="h2" fontSize={[4, 5]}>
+          <Flex alignItems="center" gap={2.5}>
+            <Heading as="h2" fontSize={[4, 5]} fontWeight={700} style={{ letterSpacing: '-0.025em', color: '#0f172a' }}>
               Songs Library
             </Heading>
             {!loading && (
-              <Badge variant="primary">
-                {songs.length} {songs.length === 1 ? 'song' : 'songs'}
-              </Badge>
+              <StatusPill>
+                <StatusDot />
+                <span>{songs.length} {songs.length === 1 ? 'song' : 'songs'}</span>
+              </StatusPill>
             )}
           </Flex>
-          <Text fontSize={1} color="textMuted" mt={1}>
+          <Text fontSize={1} color="textMuted" mt={1} style={{ letterSpacing: '-0.01em' }}>
             Manage, search, filter, and explore songs in your library.
           </Text>
         </Box>

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Box, Flex, Heading, Text } from './common/Primitives';
+import { Box, Flex, Heading } from './common/Primitives';
 
 export type NavTab = 'songs' | 'statistics';
 
@@ -10,29 +10,54 @@ interface HeaderProps {
 }
 
 const StyledHeader = styled.header`
-  background-color: ${({ theme }: any) => theme?.colors?.surface || '#ffffff'};
+  background-color: #ffffff;
   border-bottom: 1px solid ${({ theme }: any) => theme?.colors?.border || '#e2e8f0'};
-  box-shadow: ${({ theme }: any) => theme?.shadows?.sm || '0 1px 2px rgba(0,0,0,0.05)'};
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.03);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+`;
+
+const LogoIconBox = styled.div`
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+  flex-shrink: 0;
+`;
+
+const NavSegmentedGroup = styled(Flex)`
+  background-color: #f1f5f9;
+  padding: 3px;
+  border-radius: 9px;
+  border: 1px solid #e2e8f0;
+  gap: 2px;
 `;
 
 const NavButton = styled.button<{ isActive: boolean }>`
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  font-size: 0.875rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: 7px;
+  font-size: 0.85rem;
   font-weight: ${(props) => (props.isActive ? 600 : 500)};
-  color: ${(props) => (props.isActive ? '#2563eb' : '#64748b')};
-  background-color: ${(props) => (props.isActive ? '#eff6ff' : 'transparent')};
-  border: 1px solid ${(props) => (props.isActive ? '#dbeafe' : 'transparent')};
+  color: ${(props) => (props.isActive ? '#0f172a' : '#64748b')};
+  background-color: ${(props) => (props.isActive ? '#ffffff' : 'transparent')};
+  border: 1px solid ${(props) => (props.isActive ? '#e2e8f0' : 'transparent')};
+  box-shadow: ${(props) => (props.isActive ? '0 1px 3px rgba(15, 23, 42, 0.06)' : 'none')};
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 0.375rem;
-  transition: all 0.15s ease-in-out;
+  gap: 0.4rem;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
   outline: none;
 
   &:hover {
-    color: ${(props) => (props.isActive ? '#1d4ed8' : '#0f172a')};
-    background-color: ${(props) => (props.isActive ? '#dbeafe' : '#f1f5f9')};
+    color: #0f172a;
+    ${(props) => !props.isActive && `background-color: rgba(255, 255, 255, 0.6);`}
   }
 `;
 
@@ -41,7 +66,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, onTabChange }) => {
     <StyledHeader>
       <Flex
         px={[3, 4, 6]}
-        py={3}
+        py={2.5}
         maxWidth="1200px"
         mx="auto"
         alignItems="center"
@@ -49,17 +74,21 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, onTabChange }) => {
         flexWrap="wrap"
         gap={3}
       >
-        <Flex alignItems="center" gap={2}>
-          <Text fontSize={5} lineHeight={1}>
-            🎵
-          </Text>
-          <Heading as="h1" fontSize={[3, 4]} fontWeight="bold">
-            Music Management
-          </Heading>
+        {/* Brand Logo & Title */}
+        <Flex alignItems="center" gap={2.5}>
+          <LogoIconBox>
+            <span style={{ color: '#ffffff', lineHeight: 1 }}>🎵</span>
+          </LogoIconBox>
+          <Box>
+            <Heading as="h1" fontSize={[3, 4]} fontWeight={700} style={{ letterSpacing: '-0.02em', color: '#0f172a' }}>
+              Music Management
+            </Heading>
+          </Box>
         </Flex>
 
+        {/* Navigation Tabs */}
         <Box as="nav">
-          <Flex alignItems="center" gap={2}>
+          <NavSegmentedGroup alignItems="center">
             <NavButton
               type="button"
               isActive={activeTab === 'songs'}
@@ -79,7 +108,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, onTabChange }) => {
               <span>📊</span>
               <span>Statistics</span>
             </NavButton>
-          </Flex>
+          </NavSegmentedGroup>
         </Box>
       </Flex>
     </StyledHeader>
