@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { slideUp } from '../../styles/animations';
 import { Song } from '../../types';
-import { Badge, Box, Button, Card, Flex, Heading, Text } from '../common/Primitives';
+import { Badge, Box, Card, Flex, Heading, Text } from '../common/Primitives';
 
 interface SongListItemProps {
   song: Song;
@@ -99,41 +99,63 @@ const CardFooter = styled(Flex)`
   gap: 0.75rem;
 `;
 
-const EditButton = styled(Button)`
+const EditButton = styled.button`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  font-family: inherit;
   font-size: 0.8rem;
+  font-weight: 600;
   padding: 0.375rem 0.75rem;
   border-radius: 7px;
-  gap: 0.35rem;
   background-color: #ffffff;
-  border: 1px solid ${({ theme }: any) => theme?.colors?.border || '#e2e8f0'};
-  color: ${({ theme }: any) => theme?.colors?.text || '#334155'};
-  transition: all 0.18s ease;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
 
   &:hover:not(:disabled) {
     background-color: #eff6ff;
     color: #2563eb;
     border-color: #bfdbfe;
-    box-shadow: 0 1px 2px rgba(37, 99, 235, 0.1);
+    box-shadow: 0 1px 3px rgba(37, 99, 235, 0.1);
     transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
   }
 `;
 
-const DeleteButton = styled(Button)`
+const DeleteButton = styled.button`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  font-family: inherit;
   font-size: 0.8rem;
+  font-weight: 600;
   padding: 0.375rem 0.75rem;
   border-radius: 7px;
-  gap: 0.35rem;
   background-color: #ffffff;
-  border: 1px solid #fee2e2;
+  border: 1px solid #fecaca;
   color: #dc2626;
-  transition: all 0.18s ease;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
 
   &:hover:not(:disabled) {
     background-color: #fef2f2;
     color: #b91c1c;
     border-color: #f87171;
-    box-shadow: 0 1px 2px rgba(220, 38, 38, 0.12);
+    box-shadow: 0 1px 3px rgba(220, 38, 38, 0.12);
     transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
   }
 `;
 
@@ -176,7 +198,6 @@ export const SongListItem: React.FC<SongListItemProps> = ({ song, index, onEdit,
         <Flex gap={2} alignItems="center" flexShrink={0}>
           <EditButton
             type="button"
-            size="sm"
             onClick={() => onEdit(song)}
             title={`Edit ${song.title}`}
             aria-label={`Edit ${song.title}`}
@@ -187,7 +208,6 @@ export const SongListItem: React.FC<SongListItemProps> = ({ song, index, onEdit,
 
           <DeleteButton
             type="button"
-            size="sm"
             onClick={() => onDelete(song)}
             title={`Delete ${song.title}`}
             aria-label={`Delete ${song.title}`}
