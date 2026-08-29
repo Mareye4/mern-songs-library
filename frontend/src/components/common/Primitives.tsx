@@ -83,9 +83,11 @@ export const Heading = styled(Text)`
 export const Card = styled(Box)`
   background-color: ${({ theme }: any) => theme?.colors?.surface || '#ffffff'};
   border: 1px solid ${({ theme }: any) => theme?.colors?.border || '#e2e8f0'};
-  border-radius: ${({ theme }: any) => theme?.radii?.md || '8px'};
-  box-shadow: ${({ theme }: any) => theme?.shadows?.sm || '0 1px 2px 0 rgba(0,0,0,0.05)'};
-  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  border-radius: ${({ theme }: any) => theme?.radii?.lg || '12px'};
+  box-shadow: ${({ theme }: any) => theme?.shadows?.sm || '0 1px 3px 0 rgba(15, 23, 42, 0.04)'};
+  transition: box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s ease,
+              transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 `;
 
 // ── Button ─────────────────────────────────────────────────────────────────
@@ -118,19 +120,22 @@ export const Button = styled.button<ButtonProps>`
     switch (props.size) {
       case 'sm':
         return `
-          padding: 0.35rem 0.75rem;
+          padding: 0.375rem 0.75rem;
           font-size: 0.8rem;
+          border-radius: 7px;
         `;
       case 'lg':
         return `
           padding: 0.75rem 1.5rem;
           font-size: 1rem;
+          border-radius: 10px;
         `;
       case 'md':
       default:
         return `
-          padding: 0.5rem 1rem;
+          padding: 0.55rem 1.15rem;
           font-size: 0.875rem;
+          border-radius: 8px;
         `;
     }
   }}
@@ -139,12 +144,15 @@ export const Button = styled.button<ButtonProps>`
     switch (props.variant) {
       case 'danger':
         return `
-          background-color: #dc2626;
-          color: #ffffff;
+          background-color: #ffffff;
+          color: #dc2626;
+          border-color: #fecaca;
           &:hover:not(:disabled) {
-            background-color: #b91c1c;
+            background-color: #fef2f2;
+            border-color: #f87171;
+            color: #b91c1c;
             transform: translateY(-1px);
-            box-shadow: 0 2px 4px rgba(220, 38, 38, 0.25);
+            box-shadow: 0 1px 3px rgba(220, 38, 38, 0.12);
           }
           &:active:not(:disabled) {
             transform: translateY(0);
@@ -152,14 +160,15 @@ export const Button = styled.button<ButtonProps>`
         `;
       case 'outline':
         return `
-          background-color: transparent;
-          color: #0f172a;
+          background-color: #ffffff;
+          color: #334155;
           border-color: #e2e8f0;
           &:hover:not(:disabled) {
             background-color: #f8fafc;
             border-color: #cbd5e1;
+            color: #0f172a;
             transform: translateY(-1px);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
           }
           &:active:not(:disabled) {
             transform: translateY(0);
@@ -177,10 +186,11 @@ export const Button = styled.button<ButtonProps>`
       case 'secondary':
         return `
           background-color: #f1f5f9;
-          color: #0f172a;
+          color: #1e293b;
           border-color: #e2e8f0;
           &:hover:not(:disabled) {
             background-color: #e2e8f0;
+            color: #0f172a;
             transform: translateY(-1px);
           }
           &:active:not(:disabled) {
@@ -190,13 +200,14 @@ export const Button = styled.button<ButtonProps>`
       case 'primary':
       default:
         return `
-          background-color: #2563eb;
+          background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
           color: #ffffff;
-          box-shadow: 0 1px 2px rgba(37, 99, 235, 0.2);
+          border: 1px solid #1d4ed8;
+          box-shadow: 0 1px 3px rgba(37, 99, 235, 0.25);
           &:hover:not(:disabled) {
-            background-color: #1d4ed8;
+            background: linear-gradient(180deg, #1d4ed8 0%, #1e40af 100%);
             transform: translateY(-1px);
-            box-shadow: 0 3px 6px rgba(37, 99, 235, 0.3);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
           }
           &:active:not(:disabled) {
             transform: translateY(0);
@@ -226,7 +237,7 @@ export interface BadgeProps {
 export const Badge = styled.span<BadgeProps>`
   display: inline-flex;
   align-items: center;
-  padding: 0.2rem 0.6rem;
+  padding: 0.25rem 0.65rem;
   border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 600;
@@ -237,32 +248,32 @@ export const Badge = styled.span<BadgeProps>`
     switch (props.variant) {
       case 'success':
         return `
-          background-color: #f0fdf4;
-          color: #15803d;
-          border: 1px solid #bbf7d0;
+          background-color: #ecfdf5;
+          color: #065f46;
+          border: 1px solid #a7f3d0;
         `;
       case 'warning':
         return `
           background-color: #fffbeb;
-          color: #b45309;
+          color: #92400e;
           border: 1px solid #fde68a;
         `;
       case 'danger':
         return `
           background-color: #fef2f2;
-          color: #b91c1c;
+          color: #991b1b;
           border: 1px solid #fecaca;
         `;
       case 'purple':
         return `
           background-color: #f5f3ff;
-          color: #6d28d9;
+          color: #5b21b6;
           border: 1px solid #ddd6fe;
         `;
       case 'neutral':
         return `
           background-color: #f1f5f9;
-          color: #475569;
+          color: #334155;
           border: 1px solid #e2e8f0;
         `;
       case 'primary':
@@ -279,19 +290,27 @@ export const Badge = styled.span<BadgeProps>`
 // ── Input & Label ──────────────────────────────────────────────────────────
 export const Input = styled.input`
   width: 100%;
-  padding: 0.625rem 0.875rem;
+  padding: 0.65rem 0.875rem;
   border-radius: 8px;
   border: 1px solid #e2e8f0;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   color: #0f172a;
   background-color: #ffffff;
   outline: none;
   box-sizing: border-box;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+
+  &:hover {
+    border-color: #cbd5e1;
+  }
 
   &:focus {
     border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  }
+
+  &::placeholder {
+    color: #94a3b8;
   }
 
   &:disabled {
@@ -303,8 +322,8 @@ export const Input = styled.input`
 
 export const Label = styled.label`
   display: block;
-  font-size: 0.85rem;
+  font-size: 0.825rem;
   font-weight: 600;
-  color: #0f172a;
+  color: #334155;
   margin-bottom: 0.35rem;
 `;
