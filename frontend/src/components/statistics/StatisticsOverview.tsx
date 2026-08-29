@@ -18,19 +18,18 @@ const ExplorerCard = styled(Card)`
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  border: 1px solid #d7e0ee;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04);
 `;
 
 const TabButton = styled.button<{ active: boolean }>`
-  background-color: ${(props) =>
-    props.active
-      ? (props.theme as any)?.colors?.primary || '#2563eb'
-      : (props.theme as any)?.colors?.bg || '#f8fafc'};
-  color: ${(props) => (props.active ? '#ffffff' : (props.theme as any)?.colors?.text || '#0f172a')};
-  border: 1px solid
-    ${(props) =>
-      props.active
-        ? (props.theme as any)?.colors?.primary || '#2563eb'
-        : (props.theme as any)?.colors?.border || '#e2e8f0'};
+  background-color: ${(props) => (props.active ? '#315fdc' : '#ffffff')};
+  color: ${(props) => (props.active ? '#ffffff' : '#40516b')};
+  border: 1px solid ${(props) => (props.active ? '#315fdc' : '#d7e0ee')};
+  box-shadow: ${(props) =>
+    props.active ? '0 2px 8px rgba(49, 95, 220, 0.25)' : 'none'};
   padding: 0.5rem 0.875rem;
   border-radius: 8px;
   font-size: 0.85rem;
@@ -39,47 +38,57 @@ const TabButton = styled.button<{ active: boolean }>`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  transition: all 0.15s ease;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
   white-space: nowrap;
+  outline: none;
 
   &:hover {
-    border-color: ${(props) => (props.theme as any)?.colors?.primary || '#2563eb'};
     ${(props) =>
-      !props.active &&
-      `background-color: ${(props.theme as any)?.colors?.primaryLight || '#eff6ff'};
-       color: ${(props.theme as any)?.colors?.primary || '#2563eb'};`}
+      !props.active
+        ? `
+      border-color: #b8c9e6;
+      color: #315fdc;
+      background-color: #f8fafc;
+    `
+        : `
+      background-color: #264fc7;
+    `}
   }
 `;
 
 const TabCountBadge = styled.span<{ active: boolean }>`
   background-color: ${(props) =>
-    props.active ? 'rgba(255, 255, 255, 0.25)' : (props.theme as any)?.colors?.border || '#e2e8f0'};
-  color: ${(props) => (props.active ? '#ffffff' : (props.theme as any)?.colors?.textMuted || '#64748b')};
+    props.active ? 'rgba(255, 255, 255, 0.22)' : '#eef2f8'};
+  color: ${(props) => (props.active ? '#ffffff' : '#64748b')};
   padding: 0.1rem 0.45rem;
   border-radius: 9999px;
-  font-size: 0.75rem;
+  font-size: 0.725rem;
   font-weight: 700;
 `;
 
 const SearchInput = styled.input`
-  padding: 0.5rem 0.875rem;
+  padding: 0.55rem 0.875rem;
   border-radius: 8px;
-  border: 1px solid ${({ theme }: any) => theme?.colors?.border || '#e2e8f0'};
+  border: 1px solid #d3ddec;
   font-size: 0.85rem;
   background-color: #ffffff;
-  color: ${({ theme }: any) => theme?.colors?.text || '#0f172a'};
+  color: #172033;
   outline: none;
   width: 100%;
   max-width: 280px;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+
+  &:hover {
+    border-color: #b8c9e6;
+  }
 
   &:focus {
-    border-color: ${({ theme }: any) => theme?.colors?.primary || '#2563eb'};
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    border-color: #7c9fe8;
+    box-shadow: 0 0 0 3px rgba(49, 95, 220, 0.08);
   }
 
   &::placeholder {
-    color: ${({ theme }: any) => theme?.colors?.textMuted || '#94a3b8'};
+    color: #8a97aa;
   }
 `;
 
@@ -108,62 +117,68 @@ const DenseItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.65rem 0.85rem;
+  padding: 0.75rem 0.95rem;
   background-color: #ffffff;
-  border: 1px solid ${({ theme }: any) => theme?.colors?.border || '#f1f5f9'};
-  border-radius: 8px;
-  transition: transform 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+  border: 1px solid #d7e0ee;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.03);
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
 
   &:hover {
-    border-color: ${({ theme }: any) => theme?.colors?.borderDark || '#cbd5e1'};
-    background-color: #f8fafc;
-    transform: translateX(2px);
+    border-color: #b8c9e6;
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.05);
+    transform: translateY(-1.5px);
   }
 `;
 
 const RankPill = styled.span<{ rank: number }>`
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.7rem;
+  font-size: 0.725rem;
   font-weight: 700;
   flex-shrink: 0;
-  background-color: ${(props) =>
-    props.rank === 1
-      ? '#fef3c7'
-      : props.rank === 2
-      ? '#f1f5f9'
-      : props.rank === 3
-      ? '#ffedd5'
-      : '#f8fafc'};
-  color: ${(props) =>
-    props.rank === 1
-      ? '#b45309'
-      : props.rank === 2
-      ? '#475569'
-      : props.rank === 3
-      ? '#c2410c'
-      : '#64748b'};
-  border: 1px solid
-    ${(props) =>
-      props.rank === 1
-        ? '#fde68a'
-        : props.rank === 2
-        ? '#e2e8f0'
-        : props.rank === 3
-        ? '#fed7aa'
-        : '#e2e8f0'};
+  line-height: 1;
+
+  ${(props) => {
+    switch (props.rank) {
+      case 1:
+        return `
+          background: #fef3c7;
+          color: #b45309;
+          border: 1px solid #fde68a;
+        `;
+      case 2:
+        return `
+          background: #f1f5f9;
+          color: #475569;
+          border: 1px solid #e2e8f0;
+        `;
+      case 3:
+        return `
+          background: #fed7aa;
+          color: #c2410c;
+          border: 1px solid #fdba74;
+        `;
+      default:
+        return `
+          background: #f5f8ff;
+          color: #315fdc;
+          border: 1px solid #d5e0f5;
+        `;
+    }
+  }}
 `;
 
-const MiniProgressBar = styled.div<{ percent: number; color?: string }>`
-  height: 4px;
-  background-color: #f1f5f9;
-  border-radius: 2px;
+const MiniProgressBar = styled.div<{ percent: number }>`
+  height: 6px;
+  background-color: #eef1f8;
+  border-radius: 999px;
   overflow: hidden;
-  margin-top: 4px;
+  margin-top: 5px;
   width: 100%;
 
   &::after {
@@ -171,8 +186,9 @@ const MiniProgressBar = styled.div<{ percent: number; color?: string }>`
     display: block;
     height: 100%;
     width: ${(props) => `${Math.max(props.percent, 4)}%`};
-    background-color: ${(props) => props.color || '#2563eb'};
-    border-radius: 2px;
+    background: linear-gradient(90deg, #315fdc, #5b7ce8);
+    border-radius: 999px;
+    transition: width 0.3s ease;
   }
 `;
 
@@ -181,11 +197,11 @@ export const StatisticsOverview: React.FC<StatisticsOverviewProps> = ({ data }) 
   const [searchTerm, setSearchTerm] = useState('');
 
   // Tab items definition
-  const tabs: { key: TabKey; label: string; icon: string; count: number; badgeVariant: 'primary' | 'success' | 'purple' | 'warning'; color: string }[] = [
-    { key: 'genres', label: 'Genres', icon: '🏷️', count: data.songsByGenre.length, badgeVariant: 'primary', color: '#2563eb' },
-    { key: 'artists', label: 'Artists', icon: '🎤', count: data.songsByArtist.length, badgeVariant: 'success', color: '#059669' },
-    { key: 'albumsByArtist', label: 'Albums / Artist', icon: '💿', count: data.albumsByArtist.length, badgeVariant: 'purple', color: '#7c3aed' },
-    { key: 'songsByAlbum', label: 'Tracks / Album', icon: '🎼', count: data.songsByAlbum.length, badgeVariant: 'warning', color: '#d97706' },
+  const tabs: { key: TabKey; label: string; icon: string; count: number; badgeVariant: 'primary' | 'success' | 'purple' | 'warning' }[] = [
+    { key: 'genres', label: 'Genres', icon: '🏷️', count: data.songsByGenre.length, badgeVariant: 'primary' },
+    { key: 'artists', label: 'Artists', icon: '🎤', count: data.songsByArtist.length, badgeVariant: 'success' },
+    { key: 'albumsByArtist', label: 'Albums / Artist', icon: '💿', count: data.albumsByArtist.length, badgeVariant: 'purple' },
+    { key: 'songsByAlbum', label: 'Tracks / Album', icon: '🎼', count: data.songsByAlbum.length, badgeVariant: 'warning' },
   ];
 
   const activeTabConfig = tabs.find((t) => t.key === activeTab)!;
@@ -324,23 +340,24 @@ export const StatisticsOverview: React.FC<StatisticsOverviewProps> = ({ data }) 
                   const percent = Math.round((item.count / activeItems.max) * 100);
                   return (
                     <DenseItem key={item.name}>
-                      <Flex alignItems="center" gap={2} minWidth="0" flex="1" mr={2}>
+                      <Flex alignItems="center" gap={2.5} minWidth="0" flex="1" mr={2}>
                         <RankPill rank={index + 1}>{index + 1}</RankPill>
                         <Box minWidth="0" flex="1">
                           <Text
                             fontSize={1}
-                            fontWeight={500}
-                            color="text"
+                            fontWeight={600}
+                            color="#0f172a"
                             style={{
                               overflow: 'hidden',
                               textOverflow: 'ellipsis',
                               whiteSpace: 'nowrap',
+                              letterSpacing: '-0.01em',
                             }}
                             title={item.name}
                           >
                             {item.name}
                           </Text>
-                          <MiniProgressBar percent={percent} color={activeTabConfig.color} />
+                          <MiniProgressBar percent={percent} />
                         </Box>
                       </Flex>
 
@@ -358,13 +375,13 @@ export const StatisticsOverview: React.FC<StatisticsOverviewProps> = ({ data }) 
           <Flex
             alignItems="center"
             justifyContent="space-between"
-            pt={2}
+            pt={2.5}
             borderTop="1px solid"
             borderColor="border"
             flexWrap="wrap"
             gap={2}
           >
-            <Text fontSize={0} color="textMuted">
+            <Text fontSize={0} color="textMuted" fontWeight={500}>
               Showing {activeItems.items.length} of {activeItems.total} {activeTabConfig.label.toLowerCase()}
               {searchTerm && ` (filtered from "${searchTerm}")`}
             </Text>
