@@ -11,30 +11,30 @@ interface SongListItemProps {
   onDelete: (song: Song) => void;
 }
 
-const ItemCard = styled(Card)<{ delayIndex: number }>`
-  display: grid;
-  grid-template-columns: 1fr;
-  align-items: center;
-  gap: 0.85rem;
-  padding: 1.1rem 1.35rem;
-  border-radius: 10px;
+const SongCard = styled(Card)<{ delayIndex: number }>`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.875rem;
+  padding: 1.25rem;
+  border-radius: 12px;
   border: 1px solid ${({ theme }: any) => theme?.colors?.border || '#e2e8f0'};
   background-color: #ffffff;
-  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.03), 0 1px 2px -1px rgba(15, 23, 42, 0.02);
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.02);
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.2s ease,
-              background-color 0.2s ease;
+              border-color 0.2s ease;
   animation: ${slideUp} 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
   animation-delay: ${(props) => `${Math.min(props.delayIndex * 35, 250)}ms`};
 
   &:hover {
     border-color: #bfdbfe;
-    box-shadow: 0 4px 14px -2px rgba(37, 99, 235, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
-    transform: translateY(-1.5px);
+    box-shadow: 0 10px 20px -3px rgba(37, 99, 235, 0.08), 0 4px 6px -2px rgba(15, 23, 42, 0.04);
+    transform: translateY(-2px);
   }
 
-  &:hover .song-index-box {
+  &:hover .song-index-badge {
     background-color: ${({ theme }: any) => theme?.colors?.primaryLight || '#eff6ff'};
     color: ${({ theme }: any) => theme?.colors?.primary || '#2563eb'};
     border-color: #dbeafe;
@@ -43,14 +43,9 @@ const ItemCard = styled(Card)<{ delayIndex: number }>`
   &:hover .song-title-text {
     color: ${({ theme }: any) => theme?.colors?.primary || '#2563eb'};
   }
-
-  @media screen and (min-width: 768px) {
-    grid-template-columns: 36px minmax(180px, 2.5fr) minmax(140px, 1.6fr) minmax(140px, 1.6fr) 110px 145px;
-    gap: 1.25rem;
-  }
 `;
 
-const IndexBox = styled.div`
+const IndexBadge = styled.div`
   width: 32px;
   height: 32px;
   display: flex;
@@ -66,19 +61,42 @@ const IndexBox = styled.div`
   transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
 `;
 
-const MobileMetaLabel = styled(Text)`
-  font-size: 0.675rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: ${({ theme }: any) => theme?.colors?.textMuted || '#64748b'};
-  margin-bottom: 2px;
-  line-height: 1;
-  display: block;
+const SongTitle = styled(Heading)`
+  font-size: 1.025rem;
+  font-weight: 700;
+  color: ${({ theme }: any) => theme?.colors?.text || '#0f172a'};
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color 0.18s ease;
+`;
 
-  @media screen and (min-width: 768px) {
-    display: none;
-  }
+const ArtistText = styled(Text)`
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #334155;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
+const AlbumText = styled(Text)`
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #64748b;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
+const CardFooter = styled(Flex)`
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.75rem;
+  border-top: 1px solid #f1f5f9;
+  gap: 0.75rem;
 `;
 
 const EditButton = styled(Button)`
@@ -113,7 +131,7 @@ const DeleteButton = styled(Button)`
   &:hover:not(:disabled) {
     background-color: #fef2f2;
     color: #b91c1c;
-    border-color: #fca5a5;
+    border-color: #f87171;
     box-shadow: 0 1px 2px rgba(220, 38, 38, 0.12);
     transform: translateY(-1px);
   }
@@ -121,97 +139,64 @@ const DeleteButton = styled(Button)`
 
 export const SongListItem: React.FC<SongListItemProps> = ({ song, index, onEdit, onDelete }) => {
   return (
-    <ItemCard delayIndex={index}>
-      {/* 1. Index Counter */}
-      <Flex alignItems="center">
-        <IndexBox className="song-index-box">{index + 1}</IndexBox>
+    <SongCard delayIndex={index}>
+      {/* ── 1. Top Section: Header + Main Info + Genre Badge ── */}
+      <Flex alignItems="flex-start" justifyContent="space-between" gap={2}>
+        <Flex alignItems="flex-start" gap={2.5} minWidth="0" flex="1">
+          <IndexBadge className="song-index-badge">{index + 1}</IndexBadge>
+          <Box minWidth="0" flex="1">
+            <SongTitle as="h3" className="song-title-text" title={song.title}>
+              {song.title}
+            </SongTitle>
+            <ArtistText title={song.artist} mt="2px">
+              🎤 {song.artist}
+            </ArtistText>
+          </Box>
+        </Flex>
+
+        {/* Genre Pill at top-right */}
+        <Box flexShrink={0}>
+          <Badge variant="primary">{song.genre}</Badge>
+        </Box>
       </Flex>
 
-      {/* 2. Song Title */}
-      <Box minWidth="0">
-        <Heading
-          as="h3"
-          className="song-title-text"
-          fontSize={2}
-          fontWeight={600}
-          color="text"
-          style={{
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-            letterSpacing: '-0.01em',
-            transition: 'color 0.18s ease',
-          }}
-          title={song.title}
-        >
-          {song.title}
-        </Heading>
-      </Box>
-
-      {/* 3. Artist */}
-      <Box minWidth="0">
-        <MobileMetaLabel>Artist</MobileMetaLabel>
-        <Text
-          fontSize={1}
-          fontWeight={500}
-          color="text"
-          style={{
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-          }}
-          title={song.artist}
-        >
-          {song.artist}
-        </Text>
-      </Box>
-
-      {/* 4. Album */}
-      <Box minWidth="0">
-        <MobileMetaLabel>Album</MobileMetaLabel>
-        <Text
-          fontSize={1}
-          color="textMuted"
-          style={{
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-          }}
-          title={song.album}
-        >
-          {song.album}
-        </Text>
-      </Box>
-
-      {/* 5. Genre Badge */}
-      <Box justifySelf={['start', 'start', 'start']} flexShrink={0}>
-        <Badge variant="primary">{song.genre}</Badge>
-      </Box>
-
-      {/* 6. Action Buttons */}
-      <Flex gap={2} justifySelf={['end', 'end', 'end']} mt={[2, 2, 0]} flexShrink={0}>
-        <EditButton
-          type="button"
-          size="sm"
-          onClick={() => onEdit(song)}
-          title={`Edit ${song.title}`}
-          aria-label={`Edit ${song.title}`}
-        >
-          <span>✏️</span>
-          <span>Edit</span>
-        </EditButton>
-
-        <DeleteButton
-          type="button"
-          size="sm"
-          onClick={() => onDelete(song)}
-          title={`Delete ${song.title}`}
-          aria-label={`Delete ${song.title}`}
-        >
-          <span>🗑️</span>
-          <span>Delete</span>
-        </DeleteButton>
+      {/* ── 2. Middle Section: Album Info ── */}
+      <Flex alignItems="center" gap={1.5} pl="42px" minWidth="0">
+        <AlbumText title={song.album}>
+          💿 {song.album}
+        </AlbumText>
       </Flex>
-    </ItemCard>
+
+      {/* ── 3. Bottom Section: Footer with Actions ── */}
+      <CardFooter>
+        <Text fontSize={0} color="textMuted" fontWeight={500}>
+          🎵 Track in Library
+        </Text>
+
+        <Flex gap={2} alignItems="center" flexShrink={0}>
+          <EditButton
+            type="button"
+            size="sm"
+            onClick={() => onEdit(song)}
+            title={`Edit ${song.title}`}
+            aria-label={`Edit ${song.title}`}
+          >
+            <span>✏️</span>
+            <span>Edit</span>
+          </EditButton>
+
+          <DeleteButton
+            type="button"
+            size="sm"
+            onClick={() => onDelete(song)}
+            title={`Delete ${song.title}`}
+            aria-label={`Delete ${song.title}`}
+          >
+            <span>🗑️</span>
+            <span>Delete</span>
+          </DeleteButton>
+        </Flex>
+      </CardFooter>
+    </SongCard>
   );
 };

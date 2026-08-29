@@ -1,8 +1,7 @@
 import React from 'react';
-import styled from '@emotion/styled';
 import { Song } from '../../types';
 import { EmptyState } from '../common/EmptyState';
-import { Flex, Text } from '../common/Primitives';
+import { Grid } from '../common/Primitives';
 import { SongListItem } from './SongListItem';
 
 interface SongListProps {
@@ -12,22 +11,6 @@ interface SongListProps {
   onDelete: (song: Song) => void;
   onClearFilters?: () => void;
 }
-
-const ListHeader = styled.div`
-  display: none;
-  @media screen and (min-width: 768px) {
-    display: grid;
-    grid-template-columns: 36px minmax(180px, 2.5fr) minmax(140px, 1.6fr) minmax(140px, 1.6fr) 110px 145px;
-    gap: 1.25rem;
-    align-items: center;
-    padding: 0.5rem 1.35rem;
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: ${({ theme }: any) => theme?.colors?.textMuted || '#64748b'};
-  }
-`;
 
 export const SongList: React.FC<SongListProps> = ({
   songs,
@@ -66,29 +49,20 @@ export const SongList: React.FC<SongListProps> = ({
   }
 
   return (
-    <Flex flexDirection="column" gap={2}>
-      {/* Precision Column Header (Desktop) */}
-      <ListHeader>
-        <Text>#</Text>
-        <Text>Title</Text>
-        <Text>Artist</Text>
-        <Text>Album</Text>
-        <Text>Genre</Text>
-        <Text textAlign="right">Actions</Text>
-      </ListHeader>
-
-      {/* Song Cards List */}
-      <Flex flexDirection="column" gap={2}>
-        {songs.map((song, index) => (
-          <SongListItem
-            key={song._id}
-            song={song}
-            index={index}
-            onEdit={onEdit}
-            onDelete={onDelete}
-          />
-        ))}
-      </Flex>
-    </Flex>
+    <Grid
+      gridTemplateColumns={['1fr', '1fr', 'repeat(2, 1fr)', 'repeat(2, 1fr)']}
+      gridGap={['1rem', '1.25rem']}
+      alignItems="stretch"
+    >
+      {songs.map((song, index) => (
+        <SongListItem
+          key={song._id}
+          song={song}
+          index={index}
+          onEdit={onEdit}
+          onDelete={onDelete}
+        />
+      ))}
+    </Grid>
   );
 };
